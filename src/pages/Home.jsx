@@ -5,6 +5,7 @@ import Island from '../models/Island'
 import Sky from '../models/Sky'
 import Bird from '../models/Bird'
 import Plane from '../models/Plane'
+import HomeInfo from '../components/HomeInfo'
 
 const Home = () => {
 
@@ -14,12 +15,12 @@ const Home = () => {
     const adjustIslandForScreen = () => {
         let screenScale = null;
         let screenPosition = [0, -6.5, -43];
-        let rotation = [0.2, 4.75, -0.1];
+        let rotation = [0.1, -1.7, 0];
 
         if (window.innerWidth < 768) {
-            screenScale = [0.035, 0.035, 0.035];
+            screenScale = [0.7, 0.7, 0.7];
         } else {
-            screenScale = [.05, .05, .05];
+            screenScale = [1.05, 1.05, 1.05];
         }
 
         return [screenScale, screenPosition, rotation];
@@ -44,11 +45,9 @@ const Home = () => {
 
     return (
         <section className='w-full h-screen relative'>
-
-
-            {/* <div className='absolute top-28 left-0 right-0 z-10 flex items-center justify-center'>
-                POPUP
-            </div> */}
+            <div className='absolute top-32 left-0 right-0 z-10 flex items-center justify-center'>
+                {currentStage && <HomeInfo currentStage={currentStage} />}
+            </div>
             <Canvas className={`w-full h-screen bg-transparent ${isRotating ? 'cursor-grabbing' : 'cursor-grab'}`} camera={{ near: 0.1, far: 1000 }}>
                 <Suspense fallback={<Loader />}>
 
@@ -57,7 +56,7 @@ const Home = () => {
                     <hemisphereLight skyColor="#b1e1ff" groundColor={'#000000'} />
 
                     <Bird />
-                    <Sky />
+                    <Sky isRotating={isRotating} />
 
                     <Island
                         position={islandPosition}
